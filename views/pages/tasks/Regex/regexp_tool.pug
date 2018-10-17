@@ -1,0 +1,96 @@
+extends ../../../layout
+
+block content
+    style.
+        .result_state_no
+        {
+            background: #ffc9c9;
+            display: inline-block;
+            color: #9b4848;
+            padding: 20px;
+            font-size: 20px;
+            border-radius: 5px;
+            margin: 40px;
+        }
+
+        .result_state_no::after
+        {
+            display: inline-block;
+            content: 'NO';
+        }
+
+        .result_state_yes
+        {
+            background: #c9ffc9;
+            display: inline-block;
+            color: #4f9b48;
+            padding: 20px;
+            font-size: 20px;
+            border-radius: 5px;
+            margin: 40px;
+        }
+
+        .result_state_yes::after
+        {
+            display: inline-block;
+            content: 'YES';
+        }
+
+
+        .form-wrapper
+        {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100%;
+        }
+    .form-wrapper
+        p.paragraph
+            | В общем, это на самом деле некий инструмент, а не таск.
+        p.paragraph
+            | Вы можете просто вставить реглярку в нужное поле,
+            | и после, пытаться подобрать значение.
+        p.paragraph
+            | Ключами считаеться то, что идет после закрыващего слеша.
+            p.paragraph
+                | К примеру: /Tra[a-z][0-5]/ig; ig - это и есть ключи (но лучше прочесть гайд)
+        p.paragraph
+            | Писать слеши не нужно!!!!
+        form#main
+            label(for='regex')
+                input(name='regex' type='text' placeholder='Поле для регулярки')
+            label(for='keys')
+                input(name='keys', type='text' placeholder='Ключи для регулярки')
+            label(for='input')
+                input(name='input' type='text' placeholder='Строка для теста')
+            label(for='check')
+                input(name='check' type='submit')
+        div#result
+    script.
+        (function(){
+            const form = document.getElementById('main');
+            const result = document.getElementById('result');
+            
+            const classes = {
+                yes: 'result_state_yes',
+                no: 'result_state_no'
+            }
+
+            form.onsubmit = event => {
+                event.preventDefault();
+                let { regex, keys, input } = form;
+                if (!regex.value)
+                    return;
+
+                console.log(regex.value);
+
+                try {
+                    regex = new RegExp(regex.value, keys.value);
+                } catch (error) {
+                    return;
+                }
+
+                result.className = classes[regex.test(input.value) ? 'yes' : 'no'];
+            }
+        })()

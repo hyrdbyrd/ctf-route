@@ -1,0 +1,56 @@
+const express = require('express');
+const path = require('path');
+const bodyParser = require('body-parser');
+
+const app = express();
+
+const FLAG = '****************';
+
+let db = [
+    {
+        name: 'Ilya',
+        message: 'I love all of you!'
+    },
+    {
+        name: 'Meffistofil',
+        message: '\\{ 0-M-0 }/'
+    }
+];
+
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+app.get('/api', (req, res) => {
+    res.send(db);
+});
+
+app.post('/api/clear', (req, res) => {
+    db = [];
+    res.sendStatus(200);
+})
+
+app.post('/api', (req, res) => {
+    const { body } = req;
+    if (!body.name || !body.message) {
+        res.sendStatus(400);
+        return;
+    }
+
+    if (!body.name.match(/^[A-Z�-�][a-z�-�]{5,}$/ig)) {
+        res.sendStatus(400);
+        return;
+    }
+
+    db.push(body);
+    console.log(body);
+    if ('flag' in body) {
+        res.send(FLAG);
+        return;
+    }
+    res.sendStatus(200);
+})
+
+app.listen(3001, () => {
+    console.log('Task with json self-parse listening 3001 port.');
+});

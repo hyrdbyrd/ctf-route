@@ -1,0 +1,39 @@
+extends ../layout
+
+block content
+    h1.title Useful tools for CTF
+    img(style='margin: 0 auto;' width='700px' src=host + '/static/images/tools.jpg')
+    h1.title Web
+    a.link(href='https://ru.wikipedia.org/wiki/Список_кодов_состояния_HTTP')
+        p.paragraph Wiki/Http-status
+    a.link(href='https://developer.mozilla.org/ru/docs/Web/HTTP/Status')
+        p.paragraph MDN/Http-status
+    a.link(href='https://habr.com/post/38730/')
+        p.paragraph Архитектура RESTful api
+    a.link(href='https://habr.com/company/pentestit/blog/326362/')
+        p.paragraph Инъекции
+    h1.title RegExp
+    a.link(href='https://learn.javascript.ru/regular-expressions-javascript')
+        p.paragraph Отличный гид, для познания регулярных выражений
+    a.link(href=`${host}/tasks/Regex/regexp_tool`)
+        p.paragraph Можете также попользоваться тулзой что я написал для тестов регулярок
+    h1.title Stegano
+    a.link(href='https://ru.wikipedia.org/wiki/Стеганография') 
+        p.paragraph Wiki/Stegano
+    a.link(href='http://jpinsoft.net/DeepSound/Download.aspx')
+        p.paragraph DeepSound
+    a.link(href='http://exif.regex.info/exif.cgi')
+        p.paragraph Exif Regex Info
+    h1.title Общеполезные штуки
+    a.link(href='https://github.com/ReFirmLabs/binwalk')
+        p.paragraph binwalk
+    a.link(href='http://kmb.ufoctf.ru')
+        p.paragraph Гид по инструментам для CTF
+    script.
+        (function(){
+            document
+                .body
+                .querySelector('.content')
+                .querySelectorAll('a')
+                .forEach(e => e.setAttribute('target', '_blank'));
+        })();

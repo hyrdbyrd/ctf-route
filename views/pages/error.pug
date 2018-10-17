@@ -1,0 +1,6 @@
+extends ../layout
+
+block content
+    .error
+        .error__message!= error.message || 'Not Found'
+        .error__status!= error.status || 404

@@ -1,0 +1,109 @@
+extends ../../../layout
+
+block content
+    style.
+        .form-wrapper
+        {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        #table
+        {
+            border-collapse: collapse;
+            margin: 40px;
+        }
+
+        tr
+        {
+            border: 2px solid #d1d1d1;
+        }
+
+        td
+        {
+            border: 2px solid #d1d1d1;
+        }
+
+        thead
+        {
+            font-weight: bolder;
+            font-size: 30px;
+            text-transform: uppercase;
+        }
+
+        tbody
+        {
+            font-family: monospace;
+        }
+    p.paragraph.
+        Мой друг уверен в том что его база данных неуязвима, 
+        и чтобы это доказать, он разместил там свой флаг.
+    p.paragraph.
+        Суть в следующем, если вы ищите пустую строку, то 
+        получите не всю но часть таблицы. Если сделать 
+        правильный запрос, то можно получить апсолютно все
+        все имена с их ценой.
+    p.paragraph.
+        Все что я знаю, так это то, что он на сервере получает
+        то что мы вводим, и говорит "Выбрать всё из таблицы, где значение
+        равно тому, чтоы мы ввели, и верни только одно значение".
+    p.paragraph.
+        Удачи!        
+    .form-wrapper
+        form#search
+            label(for='search')
+                input(name='search' type='text' placeholder='Поиск продукта по имени')
+            label(for='send')
+                input(type='submit' name='send' value='Поиск')
+    table#table(cellpadding='20')
+        thead#tableHead
+        tbody#tableBody
+    script.
+        (function () {
+            // Inter
+            const _ = document;
+            _.find = _.querySelector;
+            Element.prototype.find = Element.prototype.querySelector;
+            const { href } = _.location;
+
+            const table = _.find('#table');
+            const thead = table.find('#tableHead');
+            const tbody = table.find('#tableBody');
+
+            const searchForm = _.find('#search');
+
+            searchForm.onsubmit = event => {
+                event.preventDefault();
+                const url = `${href}/api?name=${searchForm.search.value || ''}`;
+                fetch(url)
+                    .then(res => res.ok ? res.json() : undefined)
+                    .then(createTable);
+            };
+
+            function createTable (res) {
+                if (!res) {
+                    thead.innerHTML = '';
+                    tbody.innerHTML = '';
+                    return false;
+                }
+                // Title (Head) string gen
+                let theadString = '<tr>';
+                for (let key in res[0]) {
+                    theadString += `<td>${key}</td>`
+                }
+                theadString += '</tr>';
+                thead.innerHTML = theadString;
+
+                // Content (Body) string gen
+                let tbodyString = '';
+                res.forEach(e => {
+                    tbodyString += '<tr>';
+                    for (let key in res[0]) {
+                        tbodyString += `<td>${e[key]}</td>`
+                    }
+                    tbodyString += '</tr>';
+                });
+                tbody.innerHTML = tbodyString;
+            }    
+        })()

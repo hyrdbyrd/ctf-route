@@ -1,0 +1,12 @@
+mixin list(array, mod, isRandom)
+    - let arrayColor = ['#c7caff', '#ffd54f', '#ff5e5e', '#ff92ff', '#baffbb'];
+    - let rand = (min, max) => Math.random() * (max - min) + min | 0;
+    - isRandom = isRandom ? true : false;
+    - mod = mod || '';
+    ul.list(class='list_' + mod)
+        each item in array
+            a.link.link_wrapped(href=item.href)
+                li.list__item(
+                    class='list__item_' + mod
+                    style=isRandom ? `background: ${arrayColor[rand(0, arrayColor.length)]}` : ''
+                )= item.value

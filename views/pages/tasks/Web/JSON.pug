@@ -1,0 +1,66 @@
+extends ../../../layout
+
+block content
+    a.link.paragraph(
+        href=`${host}/static/tasks-content/web.json.txt`
+    ) Код чата
+    .form-wrapper
+        form.form
+            label(for="name")
+                input(name="name" type="text" placeholder="Имя")
+            label(for="message")
+                input(name="message" type="text" placeholder="Сообщение")
+            label(for="send")
+                input(type="submit" id="send" name="send" onclick="return false")
+        button.clear Очистить
+    .chat
+    script.
+        (function(){
+            const form = document.body.querySelector('.form');
+            const wrapper = document.body.querySelector('.chat');
+            function getChat() {
+                fetch(document.location.href + '/api')
+                    .then(res => res.json())
+                    .then(res => {
+                        console.log(res);
+                        let resultString = '';
+                        res
+                            .reverse()
+                            .forEach(e => {
+                                resultString += `
+                                    <div class="message paragraph">
+                                        <div class="message__name">
+                                            ${e.name}
+                                        </div>
+                                        : 
+                                        <div class="message__message">
+                                            ${e.message}
+                                        </div>
+                                    </div>`;
+                            });
+                        wrapper.innerHTML = resultString.trim();
+                    });
+            }
+            const btnClear = document.querySelector('.clear');
+            btnClear.onclick = () => fetch(document.location.href + '/api/clear', { method: 'post' });
+            const btn = document.getElementById('send');
+            btn.onclick = function (event) {
+                event.preventDefault();
+                fetch(document.location.href + '/api', {
+                    method: 'post',
+                    headers: {
+                        'Accept': 'application/json, text/plain, */*',
+                        'Content-Type': 'application/json'
+                    },
+                    body: `{
+                        "name": "${form.name.value}"
+                        ,
+                        "message": "${form.message.value}"
+                    }`
+                })
+                    .then(res => res.json()).then(console.log);
+                getChat();
+            }
+            getChat();
+            const i = setInterval(getChat.bind(wrapper), 3000);
+        })();

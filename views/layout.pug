@@ -1,0 +1,9 @@
+include inter
+include components/head
+script(src=`${host}/static/bundle.js`)
+.main
+    include components/header
+    section.content
+        .container.container_block_content
+            block content
+    include components/footer

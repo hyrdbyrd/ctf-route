@@ -1,0 +1,164 @@
+$color-black: #333333
+$color-white: #ffffff
+$color-yellow: #ffd54f
+$color-gray: #d1d1d1
+$color-purple: #9666ff
+$color-blue: #55a5ff
+$animate: all .1s linear
+$box-shadow: 2px 0 4px 0 rgba(51,51,51,.5)
+
+.code
+    padding: 20px
+    border-radius: 5px
+    font-size: 18px
+    font-family: monospace
+    font-weight: bold
+    
+
+.error
+    margin: 60px
+    display: flex
+    flex-direction: column
+    align-items: center
+    justify-content: center
+    background: #ffc9c9
+    border-radius: 20px
+    padding: 20px
+    font-size: 30px
+    color: #9b4848
+
+.error__message
+    font-size: 18px
+
+.error__message::after
+    display: inline-block
+    content: ": ("
+    margin-left: 5px
+    transform: rotate(90deg)
+
+body,
+.main
+    margin: 0
+    padding: 0
+    display: flex
+    flex-direction: column
+    min-height: 100%
+    min-height: 100vh
+    overflow-x: hidden
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+    color: $color-black
+
+.title
+    font-size: 36px
+    &:after
+        content: ''
+        display: block
+        background: $color-gray
+        width: 100%
+        height: 2px
+
+.list__item_block_header   
+    margin: 20px
+
+.paragraph
+    margin: 5px 0
+    font-size: 20px
+    font-family: monospace
+
+.container
+    width: 80%
+    margin: 0 auto
+    display: flex
+    flex-direction: column
+
+.header
+    background: $color-yellow
+
+.content
+    flex: 1
+    display: flex
+    margin: 0 0 40px 0
+
+.copyright
+    text-align: right
+
+.link
+    margin-left: 0
+    color: $color-blue
+    text-decoration: none
+    &:hover
+        text-decoration: underline
+    &:visited, &:active
+        color: $color-purple
+
+.link_wrapped
+    color: $color-black
+    text-decoration: none
+    &:visited, &:active
+        color: $color-black
+    &:hover
+        text-decoration: none
+
+.list
+    margin: 0
+    padding: 0
+    display: flex
+    justify-content: flex-start
+    align-items: center
+
+.list__item
+    width: 200px
+    height: 120px
+    transition: $animate
+    border-radius: 20px
+    background: $color-white
+    font-size: 26px
+    padding: 15px
+    list-style: none
+    border: 2px solid $color-black
+    box-sizing: border-box
+    display: flex
+    justify-content: center
+    align-items: center
+    &:hover
+        box-shadow: $box-shadow
+        background: $color-white
+        border-width: 0
+
+.list__item_block_header
+    height: 70px
+
+.footer
+    background: $color-yellow
+
+.message 
+    display: flex
+    justify-content: flex-start
+    align-items: center
+    font-size: 20px
+
+.message__name
+    margin-right: 10px
+
+.message__message
+    margin-left: 10px
+
+.chat
+    height: 100%
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+
+.list_block_tasks
+    flex-wrap: wrap
+    justify-content: space-around
+    height: 100%
+
+@media (max-width: 899px)
+    .container
+        width: 90%
+
+@media (max-width: 791px)
+    .container  
+        width: 98.5%

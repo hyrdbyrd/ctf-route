@@ -1,0 +1,33 @@
+extends ../../../layout
+
+block content
+    p.paragraph Введите число от 0 до 1000, если вы угадываете, вы получаете флаг!
+    form#form
+        label(for='inp')
+            input(name='inp' type='text' placehoder='Число')
+        label(for='sub')
+            input(name='sub' type='submit' placehoder='Попытка')
+    #res
+    script.
+        (function(){
+            const rand = max => Math.random() * max | 0;
+            const { href } = document.location;
+
+            const form = document.getElementById('form');
+            form.onsubmit = event => {
+                event.preventDefault();
+                if (false) {
+                    fetch(`${href}/flag`)
+                        .then(res => res.text())
+                        .then(console.log);
+                }
+            }
+
+            function NO(phrase) {
+                const res = document.getElementById('res');
+                res.innerHTML = phrase;
+                setTimeout(() => { res.innerHTML = '' }, 10000)
+            }
+
+
+        })()
